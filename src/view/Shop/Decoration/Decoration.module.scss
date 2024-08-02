@@ -1,0 +1,20 @@
+.decoration{
+  .item{
+    border: 1px solid rgba(215, 214, 214, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .preview{
+    width: 375px;
+    border: 1px solid #eeeeee;
+    margin: auto;
+    height: 750px;
+  }
+  .config{
+    // max-width: 600px;
+    .linkItem{
+      width: 400px;
+      margin-bottom: 20px;
+    }
+  }
+}

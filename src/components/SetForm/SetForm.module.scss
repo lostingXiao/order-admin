@@ -1,0 +1,19 @@
+.page{
+  background-color: var(--ant-blue-1);
+  padding: 10px 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  color: var(--ant-blue);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  .item{
+    .text{
+      margin-left: 6px;
+    }
+  }
+}
+.form{
+  max-width: 600px;
+  margin: auto;
+}

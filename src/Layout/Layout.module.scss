@@ -1,0 +1,14 @@
+.layout{
+  height: 100vh;
+ 
+  .content{
+    margin: 16px;
+    background: var(--ant-color-bg-base);
+    border-radius: var(--ant-border-radius);
+    padding: 10px;
+    overflow: auto;
+  }
+  .footer{
+    text-align: center;
+  }
+}

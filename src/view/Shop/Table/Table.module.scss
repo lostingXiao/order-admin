@@ -1,0 +1,30 @@
+.container{
+  margin-bottom: 40px;
+  .item{
+    width: 500px;
+    .seat{
+      width: 100%;
+    }
+    .qrcode{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .qrcodeName{
+        margin: 8px 0;
+        font-size: 16px;
+      }
+    }
+  }
+  .handleItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 470px;
+  }
+  .subBtn{
+    width: 100%;
+    text-align: center;
+  }
+}
+
