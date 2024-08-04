@@ -15,7 +15,11 @@ export default function Menu() {
   const [treeData,setTreeData]=useState([])
   
   const confirm = v =>{
-    form.submit()
+    if(handleType==='del'){
+      handleDelMenu()
+    }else{
+      form.submit()
+    }
   }
 
   const handleMenuClose = () =>{
@@ -23,14 +27,16 @@ export default function Menu() {
     form.resetFields()
   }
     
-  const MenuHandle=item=>{
-    setCurrMenuItem(item)
+  const handleDelMenu=async ()=>{
+    const res = await delMenu({id:currMenuItem.id})
+    getMenuList()
+    hideModal()
   }
   const onFinish = async (values) => {
     console.log('Success:', values)
-    const api=handleType==='add'?addMenu:handleType==='edit'?editMenu:delMenu
+    const api=handleType==='add'?addMenu:editMenu
     const res = await api({...values,[handleType==='add'?'parentId':'id']:currMenuItem.id})
-    console.log(res)
+    getMenuList()
     hideModal()
   }
   const getMenuList = async () =>{
@@ -41,9 +47,6 @@ export default function Menu() {
       key:item.id
     }))
     setTreeData(list)
-    console.log('treeData')
-
-    // console.log(treeData)
   }
   const showModal = ({handleType,node}) => {
     setHandleType(handleType)
@@ -78,7 +81,7 @@ export default function Menu() {
       <Button type="primary" onClick={()=>showModal({handleType:'add',node:{}})}>添加一级菜单</Button>
       { treeData.length ? <Tree showLine treeData={treeData.length?treeData:[{title: '暂无菜单',id: null,}]} titleRender={titleRender} switcherIcon={<CaretDownOutlined />} /> :'' }
       <Modal
-        title="Modal"
+        title={handleType==='del'?'删除菜单':handleType==='edit'?'编辑菜单':`添加${currMenuItem.name?currMenuItem.name+'的子':''}菜单`}
         open={open}
         onOk={confirm}
         onCancel={hideModal}
@@ -96,8 +99,6 @@ function MenuForm({form,node,type,onFinish}){
   console.log(node)
   const { name,path,id } = node
   const initialValues = { name,path }
-  console.log(initialValues)
-  // if(id) form.setFieldsValue(initialValues);
   return (
     <Form 
       form={form}
