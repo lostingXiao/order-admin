@@ -4,6 +4,7 @@ import style from './Auth.module.scss'
 import { Modal,Space,Input,Button } from "antd"
 import DataTable from '../../../components/DataTable/DataTable'
 import SearchForm from '../../../components/SearchForm/SearchForm'
+import { authList,addAuth } from '../../../api/system'
 
 const searchData=[
   { key:'ccc',type:'input',placeholder:'qqqq',label:'字段名' },
@@ -24,6 +25,7 @@ export default function Auth() {
   const navigate = useNavigate()
   const [open,setOpen] = useState(false)
   const [inputValue,setInputValue] = useState('')
+  const [ tableData,setTableData ] =useState([])
   
   const [currentItem,setCurrentItem] = useState({})
 
@@ -63,19 +65,28 @@ export default function Auth() {
     // setOpen(true)
   }
 
-  const handleOk=()=>{
+  const handleOk=async ()=>{
     console.log(inputValue)
+    const res = await addAuth({name:inputValue})
   }
   const handleCancel=()=>{
     setCurrentItem({})
     setOpen(false)
   }
-  // const inputChange()
+
+  const getAuthList = async () =>{
+    const res = await authList({pageNum:1,pageSize:10})
+    // setTableData(res.data.list)
+  }
+
+  useEffect(() => {
+    getAuthList()
+  }, [])
 
   return (
     <div className={style.auth}>
       <SearchForm data={searchData} api={onFinish}/>
-      <DataTable dataSource={dataSource} columns={columns} buttons={buttons} />
+      <DataTable dataSource={tableData} columns={columns} buttons={buttons} />
       <Modal
         title={currentItem.id?'编辑权限':`添加权限`}
         open={open}

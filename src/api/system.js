@@ -35,4 +35,24 @@ export const delMenu=(data)=> {
   })
 }
 
+// 权限列表
+export const authList=(data)=> {
+  return request({
+    url: http + '/admin/system/authList',
+    method: 'POST',
+    data
+  })
+}
+
+// 权限列表
+export const addAuth=(data)=> {
+  return request({
+    url: http + '/admin/system/addAuth',
+    method: 'POST',
+    data
+  })
+}
+
+
+
 
