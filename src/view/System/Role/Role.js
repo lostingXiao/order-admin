@@ -35,13 +35,13 @@ const searchData=[
 export default function Role() {
   const navigate = useNavigate()
   const add=()=>{
-    navigate('/system/role/set/add')
+    navigate('/system/role/add')
   }
   const edit=()=>{
-    navigate('/role/set/edit',{state:{id:'1'}})
+    navigate('/system/role/edit',{state:{id:'1'}})
   }
   const detail=()=>{
-    navigate('/role/set/detail',{state:{id:'1'}})
+    navigate('/system/role/detail',{state:{id:'1'}})
   }
   const buttons=[
     {label:'新增',onClick:add},
@@ -54,9 +54,8 @@ export default function Role() {
 
   return (
     <div className={style.menu}>
-        <SearchForm data={searchData} onFinish={onFinish}/>
-        <DataTable dataSource={dataSource} columns={columns} buttons={buttons} />
-
+      <SearchForm data={searchData} onFinish={onFinish}/>
+      <DataTable dataSource={dataSource} columns={columns} buttons={buttons} />
     </div>
   )
 }

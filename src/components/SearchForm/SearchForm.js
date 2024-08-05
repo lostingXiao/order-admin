@@ -37,9 +37,13 @@ function FormItem({item}){
   )
 }
 
-export default function SearchForm({data,onFinish}) {
+export default function SearchForm({data,api}) {
   const [form] = Form.useForm();
- 
+
+  const onFinish = (values) => {
+    console.log('Shop values of form: ', values);
+  }
+
   return (
     <Form form={form} onFinish={onFinish}>
       <Row gutter={16}>

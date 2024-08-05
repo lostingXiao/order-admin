@@ -1,7 +1,7 @@
 import React,{ useState } from 'react'
 import style from './Set.module.scss'
 import SetForm from '../../../../components/SetForm/SetForm'
-import { Button, Cascader, Form, Input, Space } from 'antd'
+import { Button, Cascader, Form, Input, Space,Select } from 'antd'
 import { options } from '../../../../mock'
 
 export default function Set() {
@@ -38,8 +38,13 @@ export default function Set() {
             >
             <Input />
           </Form.Item>
+          <Form.Item label="关键字" name="key">
+            <Select>
+              <Select.Option value="demo">Demo</Select.Option>
+            </Select>
+          </Form.Item>
           <Form.Item
-            label="菜单权限"
+            label="菜单"
             name="menus"
             rules={[{ required: true, message: '请输入标题!' }]}
             >

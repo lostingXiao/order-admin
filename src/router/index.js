@@ -165,22 +165,26 @@ const router = createHashRouter([
           {
             path: 'role',
             title:'角色',
-            handle: {
-              crumb: () => <Link to="/system/role/list">角色</Link>
-            },
-            async lazy() {
-              const { default:Component } = await import("../view/System/Role/Role")
-              return { Component }
-            },
             children: [
               {
-                path: 'set/:type',
+                path: 'list',
+                title:'列表',
+                handle: {
+                  crumb: () => <Link to="/system/role/list">角色</Link>
+                },
+                async lazy() {
+                  const { default:Component } = await import("../view/System/Role/Role")
+                  return { Component }
+                }
+              },
+              {
+                path: ':type',
                 title:'添加',
                 hide:true,
                 handle: {
                   crumb: (params) => {
                     const { type } =params
-                    return ( <span to="/Role/set/:type">{type==='add'?'新建':type==='edit'?'编辑':'详情'}</span>)
+                    return ( <span to="/role/:type">{type==='add'?'新建':type==='edit'?'编辑':'详情'}</span>)
                   }
                 },
                 async lazy() {

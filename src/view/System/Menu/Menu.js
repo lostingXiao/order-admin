@@ -14,20 +14,15 @@ export default function Menu() {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [treeData,setTreeData]=useState([])
   
-  const confirm = v =>{
+  const handleConfirm = v =>{
     if(handleType==='del'){
-      handleDelMenu()
+      delMenuFun()
     }else{
       form.submit()
     }
   }
 
-  const handleMenuClose = () =>{
-    setOpen(false)
-    form.resetFields()
-  }
-    
-  const handleDelMenu=async ()=>{
+  const delMenuFun=async ()=>{
     const res = await delMenu({id:currMenuItem.id})
     getMenuList()
     hideModal()
@@ -41,12 +36,7 @@ export default function Menu() {
   }
   const getMenuList = async () =>{
     const res = await menuList()
-    const list=res.data.list.map(item=>({
-      ...item,
-      title:item.name,
-      key:item.id
-    }))
-    setTreeData(list)
+    setTreeData(res.data.list)
   }
   const showModal = ({handleType,node}) => {
     setHandleType(handleType)
@@ -83,7 +73,7 @@ export default function Menu() {
       <Modal
         title={handleType==='del'?'删除菜单':handleType==='edit'?'编辑菜单':`添加${currMenuItem.name?currMenuItem.name+'的子':''}菜单`}
         open={open}
-        onOk={confirm}
+        onOk={handleConfirm}
         onCancel={hideModal}
         okText="确认"
         cancelText="取消">
@@ -96,9 +86,6 @@ export default function Menu() {
 
 
 function MenuForm({form,node,type,onFinish}){
-  console.log(node)
-  const { name,path,id } = node
-  const initialValues = { name,path }
   return (
     <Form 
       form={form}
