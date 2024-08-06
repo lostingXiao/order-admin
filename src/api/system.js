@@ -44,6 +44,14 @@ export const authList=(data)=> {
   })
 }
 
+// 权限全部列表
+export const authAll=()=> {
+  return request({
+    url: http + '/admin/system/authAll',
+    method: 'GET',
+  })
+}
+
 // 权限列表
 export const addAuth=(data)=> {
   return request({
@@ -52,6 +60,47 @@ export const addAuth=(data)=> {
     data
   })
 }
+
+// 角色列表
+export const roleList=(data)=> {
+  return request({
+    url: http + '/admin/system/roleList',
+    method: 'POST',
+    data
+  })
+}
+
+// 角色列表
+export const addRole=(data)=> {
+  return request({
+    url: http + '/admin/system/addRole',
+    method: 'POST',
+    data
+  })
+}
+
+// 角色全部列表
+export const roleAll=()=> {
+  return request({
+    url: http + '/admin/system/roleAll',
+    method: 'GET',
+  })
+}
+
+
+
+// 用户列表
+export const userList=(data)=> {
+  return request({
+    url: http + '/admin/system/userList',
+    method: 'POST',
+    data
+  })
+}
+
+
+
+
 
 
 

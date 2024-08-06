@@ -1,11 +1,13 @@
-import React,{ useState } from 'react'
+import React,{ useState,useEffect } from 'react'
 import style from './Set.module.scss'
 import SetForm from '../../../../components/SetForm/SetForm'
 import { Button, Select, Form, Input, Space } from 'antd'
 import { seloptions } from '../../../../mock'
+import { roleAll } from '../../../../api/system'
 
 export default function Set() {
   const [initialValues,setInitialValues]=useState({})
+  const [ roleOptions,setRoleOptions ]=useState([])
 
   const onFinish = (values) => {
     console.log('Success:', values);
@@ -13,6 +15,15 @@ export default function Set() {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
+
+  const getRoleOptions=async ()=>{
+    const res= await roleAll()
+    setRoleOptions(res.data.list)
+  }
+
+  useEffect(()=>{
+    getRoleOptions()
+  },[])
 
   return (
     <div className={style.set}>
@@ -26,27 +37,37 @@ export default function Set() {
         >
           <Form.Item
             label="用户名"
-            name="name"
-            rules={[{ required: true, message: '请输入标题!' }]}
+            name="username"
+            rules={[{ required: true, message: '请输入用户名' }]}
             >
             <Input />
           </Form.Item>
           <Form.Item
             label="密码"
-            name="key"
-            rules={[{ required: true, message: '请输入标题!' }]}
+            name="password"
+            rules={[{ required: true, message: '请输入密码' }]}
             >
             <Input />
           </Form.Item>
           <Form.Item
-            label="归属商铺"
-            name="menus"
-            rules={[{ required: true, message: '请输入标题!' }]}
+            label="手机号"
+            name="phone"
+            rules={[{ required: true, message: '请输入手机号' }]}
             >
-            <Select
-              // onChange={handleChange}
-              options={seloptions}
-            />
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="角色"
+            name="roleId"
+            rules={[{ required: true, message: '请选择角色' }]}
+            >
+            <Select fieldNames={{label:'name',value:'id'}} options={roleOptions} />
+          </Form.Item>
+          <Form.Item
+            label="归属商铺"
+            name="shopId"
+            >
+            <Select options={seloptions} />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 4, span: 20 }} >
             <Space>

@@ -1,4 +1,4 @@
-import React,{ useState,useEffect } from 'react'
+import React,{ useState,useEffect,useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import style from './Auth.module.scss'
 import { Modal,Space,Input,Button } from "antd"
@@ -7,32 +7,21 @@ import SearchForm from '../../../components/SearchForm/SearchForm'
 import { authList,addAuth } from '../../../api/system'
 
 const searchData=[
-  { key:'ccc',type:'input',placeholder:'qqqq',label:'字段名' },
-  { key:'vvv',type:'input',placeholder:'qqqq',label:'字段名' },
+  { key:'name',type:'input',label:'名称' },
+  { key:'code',type:'input',label:'CODE' },
 ]
-
-const dataSource = [
-  { key: '1', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
-  { key: '2', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
-  { key: '3', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
-  { key: '4', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
-  { key: '5', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
-];
-
-
 
 export default function Auth() {
   const navigate = useNavigate()
+  const tableRef = useRef(null);
   const [open,setOpen] = useState(false)
   const [inputValue,setInputValue] = useState('')
-  const [ tableData,setTableData ] =useState([])
+  const [formData,setFormData] =useState({})
   
   const [currentItem,setCurrentItem] = useState({})
 
   const buttons=[
     {label:'新增',onClick:()=>setOpen(true)},
-    // {label:'修改',onClick:edit},
-    // {label:'导出',onClick:detail},
   ]
 
   const columns = [
@@ -43,6 +32,7 @@ export default function Auth() {
       title: '操作',
       fixed: 'right',
       width: 200,
+      key: 'handle',
       render: (_,record) => (
         <Space>
           <Button type='primary' size="small" onClick={()=>handleEdit(record)}>编辑</Button>
@@ -52,8 +42,16 @@ export default function Auth() {
     },
   ];
 
-  const onFinish = (values) => {
-    console.log('Shop values of form: ', values);
+  const onFinish = (v) => {
+    console.log('Shop values of form: ', v);
+    console.log(formData);
+    tableRef.current.onReset();
+  }
+  const onValuesChange = (changedValues,allValues) => {
+    console.log('onValuesChange form: ');
+    console.log(changedValues)
+    console.log(allValues)
+    setFormData(allValues)
   }
 
   const handleEdit=(row)=>{
@@ -68,25 +66,20 @@ export default function Auth() {
   const handleOk=async ()=>{
     console.log(inputValue)
     const res = await addAuth({name:inputValue})
+    handleCancel()
   }
   const handleCancel=()=>{
     setCurrentItem({})
     setOpen(false)
   }
 
-  const getAuthList = async () =>{
-    const res = await authList({pageNum:1,pageSize:10})
-    // setTableData(res.data.list)
-  }
-
   useEffect(() => {
-    getAuthList()
   }, [])
 
   return (
     <div className={style.auth}>
-      <SearchForm data={searchData} api={onFinish}/>
-      <DataTable dataSource={tableData} columns={columns} buttons={buttons} />
+      <SearchForm data={searchData} onFinish={onFinish} onValuesChange={onValuesChange}/>
+      <DataTable ref={tableRef} columns={columns} buttons={buttons} params={formData} api={authList} rowKey='id' />
       <Modal
         title={currentItem.id?'编辑权限':`添加权限`}
         open={open}

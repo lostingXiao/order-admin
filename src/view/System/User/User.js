@@ -1,16 +1,10 @@
-import React from 'react'
+import React,{ useRef,useState } from 'react'
 import style from './User.module.scss'
 import { useNavigate } from 'react-router-dom'
 import DataTable from '../../../components/DataTable/DataTable'
 import SearchForm from '../../../components/SearchForm/SearchForm'
+import { userList } from '../../../api/system'
 
-const dataSource = [
-  { key: '1', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
-  { key: '2', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
-  { key: '3', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
-  { key: '4', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
-  { key: '5', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
-];
 const columns = [
   { title: '姓名',dataIndex: 'name',key: 'name',},
   { title: '年龄', dataIndex: 'age', key: 'age',},
@@ -18,22 +12,14 @@ const columns = [
 ];
 
 const searchData=[
-  { key:'ccc',type:'input',placeholder:'qqqq',label:'字段名',rules:[{required: true,message: 'Input something!'}] },
-  { key:'vvv',type:'input',placeholder:'qqqq',label:'字段名',rules:[{required: true,message: 'Input something!'}] },
-  { key:'qq',type:'input',placeholder:'qqqq',label:'字段名',rules:[{required: true,message: 'Input something!'}] },
-  { key:'ww',type:'input',placeholder:'qqqq',label:'字段名',rules:[{required: true,message: 'Input something!'}] },
-  { key:'bbb',type:'select',placeholder:'select',label:'select',rules:[{required: true,message: 'select something!'}],options:[
-    { value:'111',label:'111' },
-    { value:'222',label:'222' },
-    { value:'333',label:'333' },
-    { value:'444',label:'444' },
-    { value:'555',label:'555' },
-  { value:'666',label:'666' },
-  ] }
+  { key:'username',type:'input',placeholder:'用户名',label:'用户名' },
+  { key:'phone',type:'input',placeholder:'手机号',label:'手机号' },
 ]
 
 export default function User() {
   const navigate = useNavigate()
+  const tableRef = useRef(null);
+  const [formData,setFormData] =useState({})
   const add=()=>{
     navigate('/system/user/set/add')
   }
@@ -52,11 +38,17 @@ export default function User() {
     console.log('Shop values of form: ', values);
   }
 
+  const onValuesChange = (changedValues,allValues) => {
+    console.log('onValuesChange form: ');
+    console.log(changedValues)
+    console.log(allValues)
+    setFormData(allValues)
+  }
+
   return (
     <div className={style.menu}>
-        <SearchForm data={searchData} onFinish={onFinish}/>
-        <DataTable dataSource={dataSource} columns={columns} buttons={buttons} />
-
+      <SearchForm data={searchData} onFinish={onFinish} onValuesChange={onValuesChange}/>
+      <DataTable ref={tableRef} columns={columns} buttons={buttons} params={formData} api={userList} />
     </div>
   )
 }

@@ -37,15 +37,11 @@ function FormItem({item}){
   )
 }
 
-export default function SearchForm({data,api}) {
+export default function SearchForm({data,onFinish,onValuesChange}) {
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
-    console.log('Shop values of form: ', values);
-  }
-
   return (
-    <Form form={form} onFinish={onFinish}>
+    <Form form={form} onFinish={onFinish} onValuesChange={onValuesChange}>
       <Row gutter={16}>
         {data.map(item=>(
           <Col span={6} key={item.key}>

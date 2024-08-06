@@ -197,9 +197,6 @@ const router = createHashRouter([
           {
             path: 'user',
             title:'用户',
-            handle: {
-              crumb: () => <span>用户</span>
-            },
             children: [
               {
                 path: 'list',
@@ -208,8 +205,8 @@ const router = createHashRouter([
                   crumb: () => <Link to="/system/user/list">列表</Link>
                 },
                 async lazy() {
-                  const { default:Shop } = await import("../view/System/User/User")
-                  return { Component: Shop }
+                  const { default:Component } = await import("../view/System/User/User")
+                  return { Component: Component }
                 }
               },
               {
