@@ -2,9 +2,9 @@
 import { createHashRouter, Navigate,Link,useParams } from 'react-router-dom'
 import { PieChartOutlined } from '@ant-design/icons';
 import Layout from '../Layout/Layout'
-import Home from '../view/Home/Home'
-import Shop from '../view/Shop/List/List'
-import Set from '../view/Shop/List/Set/Set'
+// import Home from '../view/Home/Home'
+// import Shop from '../view/Shop/List/List'
+// import Set from '../view/Shop/List/Set/Set'
 
 const router = createHashRouter([
   {
@@ -22,20 +22,20 @@ const router = createHashRouter([
         }
       },
       {
-        path: 'shop',
+        path: 'business',
         title:'店铺',
         handle: {
-          crumb: () => <span>店铺</span>
+          crumb: () => <span>商家</span>
         },
         children: [
           {
             path: 'mine',
             title:'我的店铺',
             handle: {
-              crumb: () => <Link to="/shop/mine">我的店铺</Link>
+              crumb: () => <Link to="/business/mine">我的店铺</Link>
             },
             async lazy() {
-              const { default:Mine } = await import("../view/Shop/Mine/Mine")
+              const { default:Mine } = await import("../view/Business/Mine/Mine")
               return { Component: Mine }
             }
           },
@@ -50,10 +50,10 @@ const router = createHashRouter([
                 path: 'list',
                 title:'列表',
                 handle: {
-                  crumb: () => <Link to="/shop/googs/list">列表</Link>
+                  crumb: () => <Link to="/business/googs/list">列表</Link>
                 },
                 async lazy() {
-                  const { default:Component } = await import("../view/Shop/Goods/Goods")
+                  const { default:Component } = await import("../view/Business/Goods/Goods")
                   return { Component }
                 }
               },
@@ -64,11 +64,11 @@ const router = createHashRouter([
                 handle: {
                   crumb: (params) => {
                     const { type } =params
-                    return ( <span to="/shop/goods/:type">{type==='add'?'新建':type==='edit'?'编辑':'详情'}</span>)
+                    return ( <span to="/business/goods/:type">{type==='add'?'新建':type==='edit'?'编辑':'详情'}</span>)
                   }
                 },
                 async lazy() {
-                  const { default:Set } = await import("../view/Shop/Goods/Set/Set")
+                  const { default:Set } = await import("../view/Business/Goods/Set/Set")
                   return { Component: Set }
                 }
               },
@@ -78,10 +78,10 @@ const router = createHashRouter([
             path: 'decoration',
             title:'店铺装修',
             handle: {
-              crumb: () => <Link to="/shop/mine">店铺装修</Link>
+              crumb: () => <Link to="/business/decoration">店铺装修</Link>
             },
             async lazy() {
-              const { default:Decoration } = await import("../view/Shop/Decoration/Decoration")
+              const { default:Decoration } = await import("../view/Business/Decoration/Decoration")
               return { Component: Decoration }
             }
           },
@@ -89,15 +89,15 @@ const router = createHashRouter([
             path: 'table',
             title:'餐桌',
             handle: {
-              crumb: () => <Link to="/shop/mine">餐桌</Link>
+              crumb: () => <Link to="/business/table">餐桌</Link>
             },
             async lazy() {
-              const { default:Table } = await import("../view/Shop/Table/Table")
+              const { default:Table } = await import("../view/Business/Table/Table")
               return { Component: Table }
             }
           },
           {
-            path: 'list',
+            path: 'shop',
             title:'店铺',
             handle: {
               crumb: () => <span>店铺</span>
@@ -107,10 +107,10 @@ const router = createHashRouter([
                 path: 'list',
                 title:'列表',
                 handle: {
-                  crumb: () => <Link to="/shop/list/list">列表</Link>
+                  crumb: () => <Link to="/business/shop/list">列表</Link>
                 },
                 async lazy() {
-                  const { default:Shop } = await import("../view/Shop/List/List")
+                  const { default:Shop } = await import("../view/Business/Shop/Shop")
                   return { Component: Shop }
                 }
               },
@@ -121,11 +121,11 @@ const router = createHashRouter([
                 handle: {
                   crumb: (params) => {
                     const { type } =params
-                    return ( <span to="/shop/list/:type">{type==='add'?'新建':type==='edit'?'编辑':'详情'}</span>)
+                    return ( <span to="/business/list/:type">{type==='add'?'新建':type==='edit'?'编辑':'详情'}</span>)
                   }
                 },
                 async lazy() {
-                  const { default:Set } = await import("../view/Shop/List/Set/Set")
+                  const { default:Set } = await import("../view/Business/Shop/Set/Set")
                   return { Component: Set }
                 }
               },

@@ -16,7 +16,7 @@ export default function Auth() {
   const tableRef = useRef(null);
   const [open,setOpen] = useState(false)
   const [inputValue,setInputValue] = useState('')
-  const [formData,setFormData] =useState({})
+  const [searchFormData,setSearchFormData] =useState({})
   
   const [currentItem,setCurrentItem] = useState({})
 
@@ -44,14 +44,14 @@ export default function Auth() {
 
   const onFinish = (v) => {
     console.log('Shop values of form: ', v);
-    console.log(formData);
+    console.log(searchData);
     tableRef.current.onReset();
   }
   const onValuesChange = (changedValues,allValues) => {
     console.log('onValuesChange form: ');
     console.log(changedValues)
     console.log(allValues)
-    setFormData(allValues)
+    setSearchFormData(allValues)
   }
 
   const handleEdit=(row)=>{
@@ -79,7 +79,7 @@ export default function Auth() {
   return (
     <div className={style.auth}>
       <SearchForm data={searchData} onFinish={onFinish} onValuesChange={onValuesChange}/>
-      <DataTable ref={tableRef} columns={columns} buttons={buttons} params={formData} api={authList} rowKey='id' />
+      <DataTable ref={tableRef} columns={columns} buttons={buttons} params={searchFormData} api={authList} rowKey='id' />
       <Modal
         title={currentItem.id?'编辑权限':`添加权限`}
         open={open}

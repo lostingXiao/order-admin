@@ -1,8 +1,9 @@
-import React from 'react'
+import React,{ useRef,useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import style from './List.module.scss'
+import style from './Shop.module.scss'
 import DataTable from '../../../components/DataTable/DataTable'
 import SearchForm from '../../../components/SearchForm/SearchForm'
+import { shopList,addShop } from '../../../api/business'
 
 const dataSource = [
   { key: '1', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
@@ -18,18 +19,7 @@ const columns = [
 ];
 
 const searchData=[
-  { key:'ccc',type:'input',placeholder:'qqqq',label:'字段名',rules:[{required: true,message: 'Input something!'}] },
-  { key:'vvv',type:'input',placeholder:'qqqq',label:'字段名',rules:[{required: true,message: 'Input something!'}] },
-  { key:'qq',type:'input',placeholder:'qqqq',label:'字段名',rules:[{required: true,message: 'Input something!'}] },
-  { key:'ww',type:'input',placeholder:'qqqq',label:'字段名',rules:[{required: true,message: 'Input something!'}] },
-  { key:'bbb',type:'select',placeholder:'select',label:'select',rules:[{required: true,message: 'select something!'}],options:[
-    { value:'111',label:'111' },
-    { value:'222',label:'222' },
-    { value:'333',label:'333' },
-    { value:'444',label:'444' },
-    { value:'555',label:'555' },
-  { value:'666',label:'666' },
-  ] }
+  { key:'name',type:'input',placeholder:'店铺名称',label:'店铺名称' },
 ]
 
 
@@ -37,6 +27,9 @@ const searchData=[
 
 export default function List() {
   const navigate = useNavigate()
+  const tableRef = useRef(null);
+  const [searchFormData,setSearchFormData] =useState({})
+
   const add=()=>{
     navigate('/shop/list/add')
   }
@@ -54,11 +47,18 @@ export default function List() {
   const onFinish = (values) => {
     console.log('Shop values of form: ', values);
   }
+  const onValuesChange = (changedValues,allValues) => {
+    console.log('onValuesChange form: ');
+    console.log(changedValues)
+    console.log(allValues)
+    setSearchFormData(allValues)
+  }
+
 
   return (
     <div className={style.shop}>
-      <SearchForm data={searchData} onFinish={onFinish}/>
-      <DataTable dataSource={dataSource} columns={columns} buttons={buttons} />
+      <SearchForm data={searchData} onFinish={onFinish} onValuesChange={onValuesChange}/>
+      <DataTable ref={tableRef} columns={columns} buttons={buttons} params={searchFormData} api={shopList} />
     </div>
   )
 }
