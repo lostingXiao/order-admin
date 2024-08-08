@@ -1,34 +1,50 @@
 import React,{ useState,useEffect } from 'react'
 import style from './Set.module.scss'
+import { useNavigate } from 'react-router-dom'
 import SetForm from '../../../../components/SetForm/SetForm'
 import { Button, Select, Form, Input, Space } from 'antd'
 import { seloptions } from '../../../../mock'
-import { roleAll } from '../../../../api/system'
+import { roleAll,addUser } from '../../../../api/system'
+import { shopAll } from '../../../../api/business'
+
 
 export default function Set() {
+  const navigate=useNavigate()
+  const [form] = Form.useForm()
   const [initialValues,setInitialValues]=useState({})
   const [ roleOptions,setRoleOptions ]=useState([])
+  const [ shopOptions,setShopOptions ]=useState([])
 
-  const onFinish = (values) => {
-    console.log('Success:', values);
-  };
+  const onFinish = async (values) => {
+    console.log('Success:', values)
+    const res = await addUser(values)
+    navigate(-1)
+  }
+
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-  };
+  }
 
   const getRoleOptions=async ()=>{
     const res= await roleAll()
     setRoleOptions(res.data.list)
   }
 
+  const getShopOptions=async ()=>{
+    const res= await shopAll()
+    setShopOptions(res.data.list)
+  }
+
   useEffect(()=>{
     getRoleOptions()
+    getShopOptions()
   },[])
 
   return (
     <div className={style.set}>
       <SetForm>
       <Form 
+        form={form}
         labelCol={{ span: 4 }} 
         wrapperCol={{ span: 20 }}
         initialValues={initialValues}
@@ -67,12 +83,12 @@ export default function Set() {
             label="归属商铺"
             name="shopId"
             >
-            <Select options={seloptions} />
+            <Select fieldNames={{label:'name',value:'id'}} options={shopOptions} />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 4, span: 20 }} >
             <Space>
               <Button type="primary" htmlType="submit"> 提交 </Button>
-              <Button htmlType="submit"> 重置 </Button>
+              <Button onClick={()=>form.resetFields()}> 重置 </Button>
             </Space>
           </Form.Item>
         </Form>

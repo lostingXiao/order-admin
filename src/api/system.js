@@ -96,6 +96,17 @@ export const userList=(data)=> {
   })
 }
 
+// 用户列表
+export const addUser=(data)=> {
+  return request({
+    url: http + '/addUser',
+    method: 'POST',
+    data
+  })
+}
+
+
+
 
 
 

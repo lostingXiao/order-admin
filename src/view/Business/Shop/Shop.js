@@ -13,16 +13,16 @@ const dataSource = [
   { key: '5', name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
 ];
 const columns = [
-  { title: '姓名',dataIndex: 'name',key: 'name',},
-  { title: '年龄', dataIndex: 'age', key: 'age',},
-  { title: '住址', dataIndex: 'address', key: 'address',},
+  { title: '店铺名称',dataIndex: 'name',key: 'name',},
+  { title: '联系人', dataIndex: 'contact_person', key: 'contact_person',},
+  { title: '联系人电话', dataIndex: 'contact_phone', key: 'contact_phone',},
+  { title: '地址', dataIndex: 'address', key: 'address',},
+  { title: '创建时间', dataIndex: 'created_at', key: 'created_at',},
 ];
 
 const searchData=[
   { key:'name',type:'input',placeholder:'店铺名称',label:'店铺名称' },
 ]
-
-
 
 
 export default function List() {
@@ -31,7 +31,7 @@ export default function List() {
   const [searchFormData,setSearchFormData] =useState({})
 
   const add=()=>{
-    navigate('/shop/list/add')
+    navigate('/business/shop/add')
   }
   const edit=()=>{
     navigate('/shop/list/set/edit',{state:{id:'1'}})

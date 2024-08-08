@@ -6,9 +6,11 @@ import SearchForm from '../../../components/SearchForm/SearchForm'
 import { userList } from '../../../api/system'
 
 const columns = [
-  { title: '姓名',dataIndex: 'name',key: 'name',},
-  { title: '年龄', dataIndex: 'age', key: 'age',},
-  { title: '住址', dataIndex: 'address', key: 'address',},
+  { title: '姓名',dataIndex: 'username',key: 'name',},
+  { title: '电话',dataIndex: 'phone',key: 'phone',},
+  { title: '角色', dataIndex: 'role_name', key: 'role_name',},
+  { title: '归属店铺', dataIndex: 'shop_name', key: 'shop_name',},
+  { title: '创建时间', dataIndex: 'created_at', key: 'created_at',},
 ];
 
 const searchData=[
@@ -48,7 +50,7 @@ export default function User() {
   return (
     <div className={style.menu}>
       <SearchForm data={searchData} onFinish={onFinish} onValuesChange={onValuesChange}/>
-      <DataTable ref={tableRef} columns={columns} buttons={buttons} params={formData} api={userList} />
+      <DataTable ref={tableRef} columns={columns} buttons={buttons} params={formData} api={userList} rowKey='id' />
     </div>
   )
 }

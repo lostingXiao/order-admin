@@ -9,7 +9,7 @@ export const addShop=(data)=> {
     data
   })
 }
-// 添加店铺
+// 添加列表
 export const shopList=(data)=> {
   return request({
     url: http + '/shopList',
@@ -17,4 +17,14 @@ export const shopList=(data)=> {
     data
   })
 }
+
+// 添加列表
+export const shopAll=(data)=> {
+  return request({
+    url: http + '/shopAll',
+    method: 'GET',
+    data
+  })
+}
+
 
