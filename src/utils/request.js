@@ -1,5 +1,6 @@
 import axios from 'axios'
-// import { Button, Modal, Space } from 'antd';
+import store from '../store'
+import { message } from 'antd';
 
 const timeStamp = Date.now()
 const urlReg = /\/([A-Za-z0-9-_]+)(?=\?|$)/
@@ -11,14 +12,26 @@ const service = axios.create({
   timeout: 30000 // request timeout
 })
 
+console.log('store----------')
+console.log(store)
+
+
+
+
+
 // 请求拦截器
 service.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
-    console.log('Outgoing request:', config);
-    // 可以在这里添加token等
-    // config.headers.Authorization = `Bearer ${token}`;
-    // 可以返回config或者返回一个新的config对象
+    const header = {
+      token: store.user.token || '',
+    }
+    config.data = {
+      header,
+      body: {
+        ...config.data
+      }
+    }
     return config;
   },
   function (error) {
@@ -29,9 +42,16 @@ service.interceptors.request.use(
 
 // 响应拦截器
 service.interceptors.response.use(
-  function (response) {
+  response => {
     // 对响应数据做点什么
-    return response.data;
+    console.log(response.data)
+    const { code,message:errMsg  } = response.data
+    if(code===0) {
+      return response.data
+    } else {
+      message.success(errMsg)
+      return Promise.reject(errMsg)
+    }
   },
   function (error) {
     // 对响应错误做点什么

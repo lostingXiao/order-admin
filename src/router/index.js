@@ -8,6 +8,14 @@ import Layout from '../Layout/Layout'
 
 const router = createHashRouter([
   {
+    path: 'login',
+    title:'登录',
+    async lazy() {
+      const { default:Component } = await import("../view/Login/Login")
+      return { Component }
+    }
+  },
+  {
     path: '/',
     element: <Layout />,
     children: [

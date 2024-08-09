@@ -6,14 +6,17 @@ import reportWebVitals from './reportWebVitals';
 import { ConfigProvider } from 'antd';
 import { RouterProvider } from 'react-router-dom'
 import router from './router'
+// import StoreProvider from './store'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ConfigProvider theme={{ cssVar: true }}>
-      {/* <Layout /> */}
-      <RouterProvider router={router}/>
-    </ConfigProvider>
+    {/* <StoreProvider> */}
+      <ConfigProvider theme={{ cssVar: true }}>
+        {/* <Layout /> */}
+          <RouterProvider router={router}/>
+      </ConfigProvider>
+    {/* </StoreProvider> */}
   </React.StrictMode>
 );
 
