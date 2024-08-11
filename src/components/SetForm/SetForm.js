@@ -1,30 +1,52 @@
-import React from 'react'
+import React,{ useState,useEffect } from 'react'
 import style from './SetForm.module.scss'
-import { useLocation,useNavigate,useParams } from 'react-router-dom'
-import { PlusSquareOutlined,FormOutlined,FundViewOutlined,LogoutOutlined,TagOutlined,BookOutlined } from '@ant-design/icons'
+import { useNavigate,useParams } from 'react-router-dom'
+import { LogoutOutlined } from '@ant-design/icons'
+import { Button, Form, Input, Space } from 'antd'
 
 
-export default function SetForm({children}) {
+export default function SetForm({ children,initialValues,onFinish,labelCol,wrapperCol,title,disabled }) {
   const navigate=useNavigate()
-  const { type } = useParams()
+  const [form] = Form.useForm()
 
-  const back=()=>{
-    navigate(-1)
+  const getFieldsValue= async ()=>{
+    await form.validateFields() 
+    const values=form.getFieldsValue(true)
+    onFinish(values)
   }
 
-  console.log(type)
+  useEffect(() => {
+    form.setFieldsValue(initialValues)
+  }, [initialValues])
 
   return (
     <div className={style.setform}>
-      <div className={style.page}>
-        <div className={style.item}>
-          {type==='add'?<PlusSquareOutlined />:type==='edit'?<FormOutlined />:<FundViewOutlined />}
-          <span className={style.text}> {type==='add'?'新建':type==='edit'?'编辑':'详情'}</span>
+      {
+        title && 
+        <div className={style.page}>
+          <div className={style.item}>
+            <span className={style.text}> {title}</span>
+          </div>
+          <LogoutOutlined onClick={()=>navigate(-1)}></LogoutOutlined>
         </div>
-        <LogoutOutlined onClick={()=>navigate(-1)}></LogoutOutlined>
-      </div>
+      }
+      
       <div className={style.form}>
-        {children}
+        <Form 
+          form={form}
+          disabled={disabled}
+          labelCol={ labelCol || { span: 4 }} 
+          wrapperCol={ wrapperCol || { span: 20 }}
+          initialValues={ initialValues }
+          onFinish={ onFinish }>
+          {children}
+          <Form.Item wrapperCol={{ offset: ( labelCol && labelCol.span ) || 4, span: ( wrapperCol && wrapperCol.span ) || 20 }} >
+            <Space>
+              <Button type="primary" onClick={getFieldsValue}> 提交 </Button>
+              <Button onClick={()=>form.resetFields()}> 重置 </Button>
+            </Space>
+          </Form.Item>
+        </Form>
       </div>
     </div>
   )

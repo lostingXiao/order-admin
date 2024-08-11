@@ -27,7 +27,7 @@ const searchData=[
 
 export default function List() {
   const navigate = useNavigate()
-  const tableRef = useRef(null);
+  const tableRef = useRef(null)
   const [searchFormData,setSearchFormData] =useState({})
 
   const add=()=>{

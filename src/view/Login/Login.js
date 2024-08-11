@@ -3,51 +3,37 @@ import style from './Login.module.scss'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input } from 'antd'
 import { observer } from 'mobx-react-lite'
-import {  useStore } from '../../store'
+import { useStore } from '../../store'
 import { login } from '../../api/public'
+import { getUserInfo } from '../../api/system'
+import { useNavigate } from 'react-router-dom'
 
 
-const Login = observer(() => {
-
-  const { user }=useStore().store
-  console.log(user.name)
-  const { token,setSates } = user
-  // console.log(user)
-  
-
+function Login () {
+  const navigate = useNavigate()
+  const { user } = useStore()
+  const { username,setSates  } = user
+  console.log(username);
 
   const onFinish = async (values) => {
     console.log('Received values of form: ', values);
-    // console.log(name,setSates);
     const res = await login(values)
-    
-    // setSates('token',res.data.token)
-    console.log(res);
+    const { token } = res
+    setSates({token})
 
   }
 
-  // const submitLogin = () => {
-  //   loginFormRef.value
-  //     .validate()
-  //     .then(() => {
-  //       loginLoading.value = true
-  //       store
-  //         .dispatch('user/login', loginForm.value)
-  //         .then(async (res) => {
-  //           loginLoading.value = false
-  //           router.push('/')
-  //         })
-  //         .catch((err) => {
-  //           loginLoading.value = false
-  //           console.log('loginUser', err)
-  //         })
-  //     })
-  //     .catch((err) => console.log('err', err))
-  // }
+  const setUserInfo =  async () => {
+    const res = await getUserInfo()
+    console.log(res);
+    const { username, phone, shop_id:shopId, role_name:roleName, role_permissions:rolePermissions, shop_name:shopName, shop_logo_url:shopLogo } = res
+    setSates({ username, phone, shopId, roleName, shopName, shopLogo, rolePermissions })
+    navigate('/')
+  }
 
   return (
     <div className={style.login}>
-      {/* {{ token }} */}
+      { username }
       <Form
         name="normal_login"
         className={style.form}
@@ -75,11 +61,11 @@ const Login = observer(() => {
           <Button type="primary" htmlType="submit">
             Log in
           </Button>
-          Or <a href="">register now!</a>
+          Or <Button onClick={setUserInfo}>register now!</Button>
         </Form.Item>
       </Form>
     </div>
   )
-})
+}
 
-export default Login
+export default observer(Login)

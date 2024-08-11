@@ -1,16 +1,16 @@
 import { createContext, useContext } from 'react'
-import User from './User'
-
-class Store {
+import user from './modules/User'
+import { makeAutoObservable } from 'mobx'
+class RootStore {
   constructor(){
-    this.user = new User()
+    makeAutoObservable(this)
+    this.user = user
   }
 }
 
-const store = new Store() 
-const StoreContext=createContext({ store })
-export const useStore = () =>{
-  return useContext(StoreContext)
-}
+const store = new RootStore() 
+const context=createContext(store)
+export const useStore = () => useContext(context)
+
 export default store
 

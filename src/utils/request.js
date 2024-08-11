@@ -2,9 +2,7 @@ import axios from 'axios'
 import store from '../store'
 import { message } from 'antd';
 
-const timeStamp = Date.now()
-const urlReg = /\/([A-Za-z0-9-_]+)(?=\?|$)/
-const appId = 10000001
+const { setSates } = store.user
 
 const service = axios.create({
   withCredentials: false, // 携带cookie, 不支持跨域
@@ -12,26 +10,11 @@ const service = axios.create({
   timeout: 30000 // request timeout
 })
 
-console.log('store----------')
-console.log(store)
-
-
-
-
-
 // 请求拦截器
 service.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
-    const header = {
-      token: store.user.token || '',
-    }
-    config.data = {
-      header,
-      body: {
-        ...config.data
-      }
-    }
+    config.headers.Token=store.user.token || ''
     return config;
   },
   function (error) {
@@ -44,12 +27,13 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     // 对响应数据做点什么
-    console.log(response.data)
+    const { Token } = response.headers
+    Token && setSates({token:Token})
     const { code,message:errMsg  } = response.data
     if(code===0) {
-      return response.data
+      return response.data.data
     } else {
-      message.success(errMsg)
+      message.error(errMsg)
       return Promise.reject(errMsg)
     }
   },

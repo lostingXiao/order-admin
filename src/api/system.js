@@ -105,6 +105,35 @@ export const addUser=(data)=> {
   })
 }
 
+// 用户详情
+export const getUserInfo=()=> {
+  return request({
+    url: http + '/getUserInfo',
+    method: 'POST',
+  })
+}
+
+// 角色详情
+export const roleDetail=(data)=> {
+  return request({
+    url: http + '/roleDetail',
+    method: 'POST',
+    data
+  })
+}
+
+// 角色详情
+export const editRole=(data)=> {
+  return request({
+    url: http + '/editRole',
+    method: 'POST',
+    data
+  })
+}
+
+
+
+
 
 
 

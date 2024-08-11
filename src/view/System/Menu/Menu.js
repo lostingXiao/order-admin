@@ -36,7 +36,7 @@ export default function Menu() {
   }
   const getMenuList = async () =>{
     const res = await menuList()
-    setTreeData(res.data.list)
+    setTreeData(res.list)
   }
   const showModal = ({handleType,node}) => {
     setHandleType(handleType)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, Upload,message } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { uploadImg as uploadImgApi } from '../../api/public'
@@ -10,7 +10,7 @@ const getBase64 = (file) => new Promise((resolve, reject) => {
   reader.onerror = (error) => reject(error);
 })
 
-export default function UploadImg({ maxCount,onChange }) {
+export default function UploadImg({ maxCount,onChange,initFileList }) {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState([])
@@ -23,8 +23,6 @@ export default function UploadImg({ maxCount,onChange }) {
   )
 
   const beforeUpload=(file)=>{
-    console.log('beforeUpload')
-    console.log(file)
     const { size } = file
     const isLt1M = size / 1024 / 1024 < 1;
     if (!isLt1M) {
@@ -49,6 +47,12 @@ export default function UploadImg({ maxCount,onChange }) {
       onChange(uploadedFileList)
     }
   }
+
+  useEffect(()=>{
+    setFileList(initFileList||[])
+    console.log(fileList)
+    console.log(initFileList)
+  },[initFileList])
 
   return (
     <div>

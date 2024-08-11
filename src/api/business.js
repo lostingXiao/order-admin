@@ -18,7 +18,7 @@ export const shopList=(data)=> {
   })
 }
 
-// 添加列表
+// 所有店铺列表
 export const shopAll=(data)=> {
   return request({
     url: http + '/shopAll',
@@ -26,5 +26,24 @@ export const shopAll=(data)=> {
     data
   })
 }
+
+export const shopDetail=(data)=> {
+  return request({
+    url: http + '/shopDetail',
+    method: 'POST',
+    data
+  })
+}
+
+export const editShop=(data)=> {
+  return request({
+    url: http + '/editShop',
+    method: 'POST',
+    data
+  })
+}
+
+
+
 
 

@@ -7,10 +7,9 @@ const DataTable = forwardRef(({params,columns,buttons,api,rowKey,pageSize},ref)=
   const [ total,setTotal] =useState(0)
 
   const getList = async (v)=>{
-    console.log('getList')
     const _pageSize=pageSize||10
     const res = await api({ ...params,pageNum:v,pageSize:_pageSize })
-    const { total,list } = res.data
+    const { total,list } = res
     setTableData(list)
     setTotal(total)
   }

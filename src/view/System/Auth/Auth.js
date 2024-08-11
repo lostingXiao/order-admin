@@ -35,7 +35,7 @@ export default function Auth() {
       key: 'handle',
       render: (_,record) => (
         <Space>
-          <Button type='primary' size="small" onClick={()=>handleEdit(record)}>编辑</Button>
+          <Button type='link' size="small" onClick={()=>handleEdit(record)}>编辑</Button>
           {/* <Button size="small" onClick={()=>handleDel(record)}>删除</Button> */}
         </Space>
       )

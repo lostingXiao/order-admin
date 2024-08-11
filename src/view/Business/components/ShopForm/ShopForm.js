@@ -1,24 +1,60 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import style from './ShopForm.module.scss'
 import { Button, Checkbox, Form, Input, Space,Upload,message } from 'antd'
 import UploadImg from '../../../../components/UploadImg/UploadImg'
-import { addShop } from '../../../../api/business'
+import { addShop,shopDetail,editShop } from '../../../../api/business'
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../../../store';
 
 
-export default function ShopForm() {
+function ShopForm() {
+  const { user } = useStore()
   const [form] = Form.useForm();
-  const [initialValues,setInitialValues]=useState({})
+  const { shopId } = user
+  const [ initFileList, setInitFileList ] = useState([])
 
-  const onFinish = async (values) => {
+  console.log(shopId)
+
+  const setShopConfig =async ()=>{
+    if(shopId){
+      const res = await shopDetail({id:shopId})
+      const { 
+        id,
+        name,
+        address,
+        description,
+        logo_url:logoUrl,
+        contact_person:contactPerson,
+        contact_phone:contactPhone,
+      } = res
+      form.setFieldsValue({ id,name,address,description,logoUrl,contactPerson,contactPhone })
+      setInitFileList([{url:logoUrl}])
+    }else{
+      message.error('您还没有店铺信息，请先创建店铺！')
+    }
+  }
+
+  const onFinish = async () => {
+    await form.validateFields()
+    const values = form.getFieldsValue(true)
     console.log('Success:', values);
     const { logoUrl:logo,...rest } = values
-
-    const logoUrl = logo[0].response.data.url
+    const logoUrl = typeof logo ==='string' ? logo : logo[0].response.data.url
     const params ={ logoUrl,...rest }
-    const res = await addShop(params)
+    console.log(params)
+    const res = await shopId?editShop(params):addShop(params)
 
   }
+
+  const onReset = () => {
+    form.resetFields()
+    setInitFileList([])
+  }
+
+  useEffect(()=>{
+    setShopConfig()
+  },[shopId])
 
   return (
     <div className={style.shopform}>
@@ -26,7 +62,6 @@ export default function ShopForm() {
         form={form}
         labelCol={{ span: 4 }} 
         wrapperCol={{ span: 20 }}
-        initialValues={initialValues}
         onFinish={onFinish}
         >
           <Form.Item
@@ -37,7 +72,7 @@ export default function ShopForm() {
             <Input />
           </Form.Item>
           <Form.Item label="店铺LOGO" name="logoUrl" rules={[{ required: true, message: '请上传店铺LOGO' }]} >
-            <UploadImg maxCount={1}/>
+            <UploadImg maxCount={1} initFileList={initFileList} />
           </Form.Item>
           <Form.Item
             label="店铺联系人"
@@ -68,12 +103,14 @@ export default function ShopForm() {
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 4, span: 20 }} >
             <Space>
-              <Button type="primary" htmlType="submit"> 提交 </Button>
-              <Button onClick={()=>form.resetFields()}> 重置 </Button>
+              <Button type="primary" onClick={onFinish} > 提交 </Button>
+              <Button onClick={onReset}> 重置 </Button>
             </Space>
           </Form.Item>
         </Form>
     </div>
   )
 }
+
+export default observer(ShopForm)
 

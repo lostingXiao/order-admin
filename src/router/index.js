@@ -152,7 +152,7 @@ const router = createHashRouter([
             path: 'auth',
             title:'授权',
             handle: {
-              crumb: () => <Link to='/system/auth'>菜单</Link>
+              crumb: () => <Link to='/system/auth'>授权</Link>
             },
             async lazy() {
               const { default:Component } = await import("../view/System/Auth/Auth")
@@ -173,12 +173,15 @@ const router = createHashRouter([
           {
             path: 'role',
             title:'角色',
+            handle: {
+              crumb: () => <span>角色</span>
+            },
             children: [
               {
                 path: 'list',
                 title:'列表',
                 handle: {
-                  crumb: () => <Link to="/system/role/list">角色</Link>
+                  crumb: () => <Link to="/system/role/list">列表</Link>
                 },
                 async lazy() {
                   const { default:Component } = await import("../view/System/Role/Role")
