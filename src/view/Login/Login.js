@@ -13,7 +13,6 @@ function Login () {
   const navigate = useNavigate()
   const { user } = useStore()
   const { username,setSates  } = user
-  console.log(username);
 
   const onFinish = async (values) => {
     console.log('Received values of form: ', values);

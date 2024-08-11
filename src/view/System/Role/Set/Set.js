@@ -55,7 +55,7 @@ export default function Set() {
         onFinish={onFinish} 
         initialValues={initialValues}
         title={type==='add'?'新建':type==='edit'?'编辑':'详情'} 
-        disabled={type==='detail'}>
+        disabled={type==='detail'} >
         <Form.Item
           label="角色名称"
           name="name"
