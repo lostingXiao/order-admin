@@ -1,10 +1,10 @@
 import React,{ useState,useEffect } from 'react'
 import style from './Set.module.scss'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,useParams,useLocation } from 'react-router-dom'
 import SetForm from '../../../../components/SetForm/SetForm'
 import { Button, Select, Form, Input, Space } from 'antd'
 import { seloptions } from '../../../../mock'
-import { roleAll,addUser } from '../../../../api/system'
+import { roleAll,addUser,userDetail,editUser } from '../../../../api/system'
 import { shopAll } from '../../../../api/business'
 
 
@@ -14,10 +14,12 @@ export default function Set() {
   const [initialValues,setInitialValues]=useState({})
   const [ roleOptions,setRoleOptions ]=useState([])
   const [ shopOptions,setShopOptions ]=useState([])
+  const { type } = useParams()
+  const { state } = useLocation()
 
   const onFinish = async (values) => {
     console.log('Success:', values)
-    const res = await addUser(values)
+    const res = type==='add' ? await addUser(values):await editUser(values)
     navigate(-1)
   }
 
@@ -31,14 +33,31 @@ export default function Set() {
     setShopOptions(res.list)
   }
 
-  useEffect(()=>{
+  const getUserDetail= async () => {
+    const res = await userDetail({ id:state.id })
+    const { id,username,password,phone,role_id:roleId,shop_id:shopId } = res
+    setInitialValues({ id,username,password,phone,roleId,shopId })
+  }
+
+  const init=()=>{
     getRoleOptions()
     getShopOptions()
+    if(type!=='add'){
+      getUserDetail()
+    }
+  }
+
+  useEffect(()=>{
+    init()
   },[])
 
   return (
     <div className={style.set}>
-      <SetForm initialValues={initialValues} onFinish={onFinish}>
+      <SetForm 
+        title={type==='add'?'新建':type==='edit'?'编辑':'详情'} 
+        initialValues={initialValues} 
+        onFinish={onFinish}
+        disabled={type==='detail'} >
         <Form.Item
           label="用户名"
           name="username"

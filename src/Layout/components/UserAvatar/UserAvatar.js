@@ -7,17 +7,30 @@ import { UserOutlined } from '@ant-design/icons';
 import Permission from '../../../components/Permission/Permission';
 import { LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import SystemUser from './components/SystemUser/SystemUser';
+import SystemUser from './components/SystemUser/SystemUser'
+import { getUserInfo } from '../../../api/system'
 
 function UserAvatar() {
   const navigate = useNavigate()
   const { user } = useStore()
-  const { clearSates,shopLogo,shopName } = user
+  const { clearSates,shopLogo,shopName,setSates } = user
  
   const logout = ()=>{
     clearSates()
     navigate('/login')
   }
+
+  const setUserInfo =  async () => {
+    const res = await getUserInfo()
+    console.log(res);
+    const { username, phone, shop_id:shopId, role_name:roleName, shop_name:shopName, shop_logo_url:shopLogo } = res
+    setSates({ username, phone, shopId, roleName, shopName, shopLogo })
+    navigate('/')
+  }
+
+  useEffect(()=>{
+    setUserInfo()
+  },[])
 
   return (
     <div className={style.useravatar}>

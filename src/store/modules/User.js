@@ -6,13 +6,12 @@ const moduleName = 'user-'
 class User {
 
   token = getStore(`${moduleName}token`) ||''
-  username = getStore(`${moduleName}username`) || ''
-  phone = getStore(`${moduleName}phone`) || ''
-  shopId = getStore(`${moduleName}shopId`) || null
-  shopName = getStore(`${moduleName}shopName`) || ''
-  shopLogo = getStore(`${moduleName}shopLogo`) || ''
-  roleName = getStore(`${moduleName}roleName`) || ''
-  rolePermissions = getStore(`${moduleName}rolePermissions`) || []
+  username = ''
+  phone = ''
+  shopId = null
+  shopName = ''
+  shopLogo = ''
+  roleName = ''
 
   constructor(){
     makeAutoObservable(this,{},{autoBind:true})
@@ -20,10 +19,10 @@ class User {
 
   // action
   //设置用户基础信息 
-  setSates(data){
+  setSates(data,persistent){
     for(let key in data ){
       this[key]=data[key]
-      setStore({name:moduleName+key,content:data[key]})
+      persistent && setStore({name:moduleName+key,content:data[key]})
     }
   }
   clearSates(){
@@ -43,7 +42,8 @@ class User {
     })
   }
 }
- const user = new User()
+
+const user = new User()
 
 export default user
 

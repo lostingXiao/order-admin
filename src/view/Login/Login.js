@@ -5,34 +5,32 @@ import { Button, Checkbox, Form, Input } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useStore } from '../../store'
 import { login } from '../../api/public'
-import { getUserInfo } from '../../api/system'
 import { useNavigate } from 'react-router-dom'
+import { getUserInfo } from '../../api/system'
 
 
 function Login () {
   const navigate = useNavigate()
   const { user } = useStore()
-  const { username,setSates  } = user
+  const { setSates  } = user
 
   const onFinish = async (values) => {
     console.log('Received values of form: ', values);
     const res = await login(values)
     const { token } = res
-    setSates({token})
+    setSates({token},true)
 
   }
 
   const setUserInfo =  async () => {
-    const res = await getUserInfo()
-    console.log(res);
-    const { username, phone, shop_id:shopId, role_name:roleName, role_permissions:rolePermissions, shop_name:shopName, shop_logo_url:shopLogo } = res
-    setSates({ username, phone, shopId, roleName, shopName, shopLogo, rolePermissions })
+
+    // await getUserInfo()
+
     navigate('/')
   }
 
   return (
     <div className={style.login}>
-      { username }
       <Form
         name="normal_login"
         className={style.form}

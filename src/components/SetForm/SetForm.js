@@ -5,19 +5,23 @@ import { LogoutOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Space } from 'antd'
 
 
-export default function SetForm({ children,initialValues,onFinish,labelCol,wrapperCol,title,disabled }) {
+export default function SetForm({ children,initialValues,onFinish,onRest,labelCol,wrapperCol,title,disabled }) {
   const navigate=useNavigate()
   const [form] = Form.useForm()
 
-  const getFieldsValue= async ()=>{
-    await form.validateFields() 
-    const values=form.getFieldsValue(true)
+  const onFormFinish = v =>{
+    const vt = form.getFieldsValue(true)
+    const values = { ...vt,...v }
     onFinish(values)
+  }
+  const onFormRest = v =>{
+    form.resetFields()
+    onRest()
   }
 
   useEffect(() => {
     form.setFieldsValue(initialValues)
-  }, [initialValues])
+  }, [ initialValues ])
 
   return (
     <div className={style.setform}>
@@ -37,13 +41,12 @@ export default function SetForm({ children,initialValues,onFinish,labelCol,wrapp
           disabled={disabled}
           labelCol={ labelCol || { span: 4 }} 
           wrapperCol={ wrapperCol || { span: 20 }}
-          initialValues={ initialValues }
-          onFinish={ onFinish }>
+          onFinish={ onFormFinish }>
           {children}
           <Form.Item wrapperCol={{ offset: ( labelCol && labelCol.span ) || 4, span: ( wrapperCol && wrapperCol.span ) || 20 }} >
             <Space>
-              <Button type="primary" onClick={getFieldsValue}> 提交 </Button>
-              <Button onClick={()=>form.resetFields()}> 重置 </Button>
+              <Button type="primary" htmlType="submit"> 提交 </Button>
+              <Button onClick={onFormRest}> 重置 </Button>
             </Space>
           </Form.Item>
         </Form>

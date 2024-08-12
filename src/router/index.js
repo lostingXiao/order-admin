@@ -208,6 +208,9 @@ const router = createHashRouter([
           {
             path: 'user',
             title:'用户',
+            handle: {
+              crumb: () => <span>用户</span>
+            },
             children: [
               {
                 path: 'list',
@@ -227,7 +230,7 @@ const router = createHashRouter([
                 handle: {
                   crumb: (params) => {
                     const { type } =params
-                    return ( <span to="/System/User/User/:type">{type==='add'?'新建':type==='edit'?'编辑':'详情'}</span>)
+                    return ( <span>{type==='add'?'新建':type==='edit'?'编辑':'详情'}</span>)
                   }
                 },
                 async lazy() {

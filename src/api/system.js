@@ -122,7 +122,7 @@ export const roleDetail=(data)=> {
   })
 }
 
-// 角色详情
+// 角色编辑
 export const editRole=(data)=> {
   return request({
     url: http + '/editRole',
@@ -130,6 +130,39 @@ export const editRole=(data)=> {
     data
   })
 }
+
+// 角色权限认证
+export const authorization=(data)=> {
+  return request({
+    url: http + '/authorization',
+    method: 'POST',
+    data
+  })
+}
+
+// 用户详情
+export const userDetail=(data)=> {
+  return request({
+    url: http + '/userDetail',
+    method: 'POST',
+    data
+  })
+}
+
+// 用户编辑
+export const editUser=(data)=> {
+  return request({
+    url: http + '/editUser',
+    method: 'POST',
+    data
+  })
+}
+
+
+
+
+
+
 
 
 

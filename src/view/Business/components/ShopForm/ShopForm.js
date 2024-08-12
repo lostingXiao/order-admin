@@ -8,106 +8,90 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../store';
 
 
-function ShopForm() {
-  const { user } = useStore()
+function ShopForm({ initFileList }) {
+  // const { user } = useStore()
   const [form] = Form.useForm();
-  const { shopId } = user
-  const [ initFileList, setInitFileList ] = useState([])
+  // const { shopId } = user
+  // const [ initFileList, setInitFileList ] = useState([])
 
-  console.log(shopId)
+  // console.log(shopId)
 
-  const setShopConfig =async ()=>{
-    if(shopId){
-      const res = await shopDetail({id:shopId})
-      const { 
-        id,
-        name,
-        address,
-        description,
-        logo_url:logoUrl,
-        contact_person:contactPerson,
-        contact_phone:contactPhone,
-      } = res
-      form.setFieldsValue({ id,name,address,description,logoUrl,contactPerson,contactPhone })
-      setInitFileList([{url:logoUrl}])
-    }else{
-      message.error('您还没有店铺信息，请先创建店铺！')
-    }
-  }
+  // const setShopConfig =async ()=>{
+  //   if(shopId){
+  //     const res = await shopDetail({id:shopId})
+  //     const { 
+  //       id,
+  //       name,
+  //       address,
+  //       description,
+  //       logo_url:logoUrl,
+  //       contact_person:contactPerson,
+  //       contact_phone:contactPhone,
+  //     } = res
+  //     form.setFieldsValue({ id,name,address,description,logoUrl,contactPerson,contactPhone })
+  //     setInitFileList([{url:logoUrl}])
+  //   }else{
+  //     message.error('您还没有店铺信息，请先创建店铺！')
+  //   }
+  // }
 
-  const onFinish = async () => {
-    await form.validateFields()
-    const values = form.getFieldsValue(true)
-    console.log('Success:', values);
-    const { logoUrl:logo,...rest } = values
-    const logoUrl = typeof logo ==='string' ? logo : logo[0].response.data.url
-    const params ={ logoUrl,...rest }
-    console.log(params)
-    const res = await shopId?editShop(params):addShop(params)
+  // const onFinish = async () => {
+  //   await form.validateFields()
+  //   const values = form.getFieldsValue(true)
+  //   console.log('Success:', values);
+  //   const { logoUrl:logo,...rest } = values
+  //   const logoUrl = typeof logo ==='string' ? logo : logo[0].response.data.url
+  //   const params ={ logoUrl,...rest }
+  //   console.log(params)
+  //   const res = await shopId?editShop(params):addShop(params)
 
-  }
+  // }
 
-  const onReset = () => {
-    form.resetFields()
-    setInitFileList([])
-  }
+  // const onReset = () => {
+  //   form.resetFields()
+  //   setInitFileList([])
+  // }
 
-  useEffect(()=>{
-    setShopConfig()
-  },[shopId])
+  // useEffect(()=>{
+  //   setShopConfig()
+  // },[shopId])
 
   return (
     <div className={style.shopform}>
-      <Form 
-        form={form}
-        labelCol={{ span: 4 }} 
-        wrapperCol={{ span: 20 }}
-        onFinish={onFinish}
+      <Form.Item
+        label="店铺名称"
+        name="name"
+        rules={[{ required: true, message: '请输入店铺名称' }]}
         >
-          <Form.Item
-            label="店铺名称"
-            name="name"
-            rules={[{ required: true, message: '请输入店铺名称' }]}
-            >
-            <Input />
-          </Form.Item>
-          <Form.Item label="店铺LOGO" name="logoUrl" rules={[{ required: true, message: '请上传店铺LOGO' }]} >
-            <UploadImg maxCount={1} initFileList={initFileList} />
-          </Form.Item>
-          <Form.Item
-            label="店铺联系人"
-            name="contactPerson"
-            rules={[{ required: true, message: '请输入店铺联系人' }]}
-            >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="联系人电话"
-            name="contactPhone"
-            rules={[{ required: true, message: '请输入联系人电话' }]}
-            >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="地址"
-            name="address"
-            rules={[{ required: true, message: '请输入地址' }]}
-            >
-            <Input.TextArea />
-          </Form.Item>
-          <Form.Item
-            label="简介"
-            name="description"
-            >
-            <Input.TextArea rows={4} />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 4, span: 20 }} >
-            <Space>
-              <Button type="primary" onClick={onFinish} > 提交 </Button>
-              <Button onClick={onReset}> 重置 </Button>
-            </Space>
-          </Form.Item>
-        </Form>
+        <Input />
+      </Form.Item>
+      <Form.Item label="店铺LOGO" name="logoUrl" valuePropName="logoUrl" rules={[{ required: true, message: '请上传店铺LOGO' }]} >
+        <UploadImg maxCount={1} initFileList={initFileList} />
+      </Form.Item>
+      <Form.Item
+        label="店铺联系人"
+        name="contactPerson"
+        rules={[{ required: true, message: '请输入店铺联系人' }]}
+        >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="联系人电话"
+        name="contactPhone"
+        rules={[{ required: true, message: '请输入联系人电话' }]}
+        >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="地址"
+        name="address"
+        rules={[{ required: true, message: '请输入地址' }]}
+        >
+        <Input.TextArea />
+      </Form.Item>
+      <Form.Item label="简介" name="description">
+        <Input.TextArea rows={4} />
+      </Form.Item>
     </div>
   )
 }

@@ -15,11 +15,12 @@ export default function Set() {
 
   const onFinish = async v => {
     console.log('Success:', v);
-    const { id,name,menus:mes,permissions:pers } = v 
+    const { menus:mes,permissions:pers } = v 
     const menus=mes||[]
     const permissions=pers||[]
-    const params ={ name,menus,permissions }
-    const res = type==='add'?await addRole(params):await editRole({ id,name,menus,permissions })
+    const params ={ ...v,menus,permissions }
+    console.log(type)
+    const res = type==='add'?await addRole(params):await editRole(params)
     navigate(-1)
   }
   const getMenuOptions = async () => {
@@ -34,7 +35,8 @@ export default function Set() {
 
   const getRoleDetail= async () => {
     const res = await roleDetail({ id:state.id })
-    setInitialValues(res)
+    const { id,name,permissions,menus } = res
+    setInitialValues({ id,name,permissions,menus })
   }
 
   const init=()=>{
