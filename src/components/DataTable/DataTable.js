@@ -6,9 +6,10 @@ const DataTable = forwardRef(({params,columns,buttons,api,rowKey,pageSize},ref)=
   const [ tableData,setTableData ] =useState([])
   const [ total,setTotal] =useState(0)
 
-  const getList = async (v)=>{
+  const getList = async (pageNum,param)=>{
     const _pageSize=pageSize||10
-    const res = await api({ ...params,pageNum:v,pageSize:_pageSize })
+    const pars=param||params
+    const res = await api({ ...pars,pageNum:pageNum,pageSize:_pageSize })
     const { total,list } = res
     setTableData(list)
     setTotal(total)
@@ -19,16 +20,14 @@ const DataTable = forwardRef(({params,columns,buttons,api,rowKey,pageSize},ref)=
   }
   
   useImperativeHandle(ref, () => ({
-    onReset: () => {
-      console.log('onReset')
-      console.log(params)
-      getList(1)
+    onReset: (params) => {
+      getList(1,params)
     }
   }));
 
   useEffect(() => {
     getList(1)
-  }, [])
+  }, [params])
   
   return (
     <div>

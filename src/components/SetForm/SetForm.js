@@ -10,13 +10,12 @@ export default function SetForm({ children,initialValues,onFinish,onRest,labelCo
   const [form] = Form.useForm()
 
   const onFormFinish = v =>{
-    const vt = form.getFieldsValue(true)
-    const values = { ...vt,...v }
+    const values = { ...initialValues,...v }
     onFinish(values)
   }
   const onFormRest = v =>{
     form.resetFields()
-    onRest()
+    onRest && onRest()
   }
 
   useEffect(() => {

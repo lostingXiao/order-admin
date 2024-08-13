@@ -43,6 +43,39 @@ export const editShop=(data)=> {
   })
 }
 
+export const addGoods=(data)=> {
+  return request({
+    url: http + '/addGoods',
+    method: 'POST',
+    data
+  })
+}
+
+export const goodsList=(data)=> {
+  return request({
+    url: http + '/goodsList',
+    method: 'POST',
+    data
+  })
+}
+
+export const goodsDetail=(data)=> {
+  return request({
+    url: http + '/goodsDetail',
+    method: 'POST',
+    data
+  })
+}
+
+export const editGoods=(data)=> {
+  return request({
+    url: http + '/editGoods',
+    method: 'POST',
+    data
+  })
+}
+
+
 
 
 

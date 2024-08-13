@@ -21,7 +21,7 @@ export default function Table() {
       <div id={`qrcode${name}`} className={style.qrcode}>
         <QRCode
           errorLevel="H"
-          value="https://ant.design/"
+          value=" "
           size={size}
           iconSize={iconSize}
           icon={icon}

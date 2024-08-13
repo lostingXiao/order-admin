@@ -1,13 +1,13 @@
 import React from 'react';
-import { Button, Col, Form, Input, Row, Select, Space } from 'antd';
 import style from './SearchForm.module.scss'
+import { Button, Col, Form, Input, Select, Space } from 'antd';
 
 function FormItem({item}){
   const {type} = item
   let elment=''
   switch(type){
     case 'input':
-      elment=(
+      elment=( 
         <Form.Item name={item.key} label={item.label} rules={item.rules}>
           <Input allowClear placeholder={item.placeholder} />
         </Form.Item>
@@ -25,11 +25,7 @@ function FormItem({item}){
       )
       break
     default:
-      elment=(
-        <Form.Item name={item.key} label={item.label} rules={item.rules}>
-          <Input allowClear placeholder={item.placeholder} />
-        </Form.Item>
-      )
+      elment=''
     break
   }
   return (
@@ -37,24 +33,27 @@ function FormItem({item}){
   )
 }
 
-export default function SearchForm({data,onFinish,onValuesChange}) {
-  const [form] = Form.useForm();
-
+export default function SearchForm({data,onFinish}) {
+  const [form] = Form.useForm()
   return (
-    <Form form={form} onFinish={onFinish} onValuesChange={onValuesChange}>
-      <Row gutter={16}>
-        {data.map(item=>(
-          <Col span={6} key={item.key}>
-            <FormItem item={item}></FormItem>
-          </Col>
-        ))}
-        <Col className={style.handle}>
+    <Form form={form} layout="inline" onFinish={onFinish} className={ style.searchform }>
+        {data.map(item=>{
+          if(item.hide){
+            return ''
+          }else{
+            return (
+              <Col span={6} key={item.key}>
+                <FormItem item={item}></FormItem>
+              </Col>
+            )
+          }
+        })}
+        <Col span={6}>
           <Space>
             <Button type="primary" htmlType='submit'>查询</Button>
             <Button onClick={()=>form.resetFields()}>重置</Button>
           </Space>
         </Col>
-      </Row>
     </Form>
   )
 }
