@@ -8,6 +8,10 @@
     padding: 10px;
     overflow: auto;
   }
+  .outlet{
+    height: calc(100% - 42px);
+    overflow-y: auto;
+  }
   .footer{
     text-align: center;
   }

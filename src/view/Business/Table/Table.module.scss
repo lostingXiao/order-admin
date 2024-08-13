@@ -1,30 +1,65 @@
-.container{
-  margin-bottom: 40px;
-  .item{
-    width: 500px;
-    .seat{
-      width: 100%;
-    }
-    .qrcode{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      .qrcodeName{
-        margin: 8px 0;
-        font-size: 16px;
-      }
-    }
+// .container{
+//   margin-bottom: 40px;
+//   .item{
+//     width: 500px;
+//     .seat{
+//       width: 100%;
+//     }
+//     .qrcode{
+//       display: flex;
+//       flex-direction: column;
+//       justify-content: center;
+//       align-items: center;
+//       .qrcodeName{
+//         margin: 8px 0;
+//         font-size: 16px;
+//       }
+//     }
+//   }
+//   .handleItem{
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     min-height: 470px;
+//   }
+//   .subBtn{
+//     width: 100%;
+//     text-align: center;
+//   }
+// }
+
+
+.handle{
+  padding-bottom: 10px;
+  position: sticky;
+  top: 0; 
+  background: #ffffff;
+  z-index: 1;
+}
+.space{
+  padding: 10px;
+  .seat{
+    width: 100%;
   }
-  .handleItem{
+  .inputnumber{
+    width: 120px;
+  }
+  .qrcodeitem{
+    margin-bottom: 0;
+  }
+  .qrcode{
+    width: 250px;
+    height: 280px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 470px;
-  }
-  .subBtn{
-    width: 100%;
-    text-align: center;
+    .qrcodeName{
+      margin: 8px 0;
+      font-size: 16px;
+    }
   }
 }
+
+
 

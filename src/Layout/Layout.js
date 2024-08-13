@@ -23,7 +23,9 @@ export default function Layout() {
         </Header>
         <Content className={style.content}>
           <BreadcrumbNav></BreadcrumbNav>
-          <Outlet />
+          <div className={style.outlet}>
+            <Outlet />
+          </div>
         </Content>
         <Footer className={style.footer}> 商家配置后台 ©{new Date().getFullYear()} Created by XIAO</Footer>
       </AntdLayout>
