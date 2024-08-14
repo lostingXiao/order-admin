@@ -28,6 +28,12 @@
 //   }
 // }
 
+.hide{
+  display: none;
+}
+.container{
+  padding: 10px;
+}
 
 .handle{
   padding-bottom: 10px;
@@ -36,30 +42,27 @@
   background: #ffffff;
   z-index: 1;
 }
-.space{
-  padding: 10px;
-  .seat{
-    width: 100%;
-  }
-  .inputnumber{
-    width: 120px;
-  }
-  .qrcodeitem{
-    margin-bottom: 0;
-  }
-  .qrcode{
-    width: 250px;
-    height: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    .qrcodeName{
-      margin: 8px 0;
-      font-size: 16px;
-    }
-  }
+.qrcodeitem{
+  margin-bottom: 0;
 }
+.seat{
+  width: 100%;
+}
+.inputnumber{
+  width: 120px;
+}
+.qrcode{
+  display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 250px;
+      .qrcodeName{
+        margin: 8px 0;
+        font-size: 16px;
+      }
+}
+
 
 
 
