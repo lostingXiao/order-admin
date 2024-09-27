@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import style from './Set.module.scss'
 import SetForm from '../../../../components/SetForm/SetForm'
-import { SettingOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Space,Upload,InputNumber,Switch } from 'antd'
-import ShopForm from '../../components/ShopForm/ShopForm'
-import { useParams,useLocation, useNavigate } from 'react-router-dom';
-import UploadImg from '../../../../components/UploadImg/UploadImg';
-import { addGoods,goodsDetail,editGoods } from '../../../../api/business';
+import { Select, Form, Input, InputNumber,Switch } from 'antd'
+import { useParams,useLocation, useNavigate } from 'react-router-dom'
+import UploadImg from '../../../../components/UploadImg/UploadImg'
+import { addGoods,goodsDetail,editGoods,shopGoodsTypes } from '../../../../api/business'
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../store';
 
@@ -20,19 +18,22 @@ function Set() {
   const { shopId } = user
   const goodsId = state.id
 
+  const [typeOptions,setTypeOptions]=useState([
+    { value: '1', label: 'Jack' },
+    { value: '2', label: 'Lucy' },
+    { value: '3', label: 'Tom' },
+  ])
+  
+
   const onFinish = async (values) => {
-    console.log('Success:', values);
     const { state:se,img:ig,...rest } = values
     const img = typeof ig === 'string' ? ig : ig[0].response.data.url
     const state = se ? 1 : 0
     const params = {...rest,shopId,goodsId,state,img}
-    console.log(params)
-    const res = goodsId ? await editGoods(params) : await addGoods(params)
-    navigate(-1)
+    goodsId ? await editGoods(params) : await addGoods(params)
+    navigate('/business/businessGoods/businessGoodsList')
   }
   
-  console.log( state )
-
   const onRest= ()=>{
 
   }
@@ -46,18 +47,25 @@ function Set() {
         description,
         img,
         price,
+        typeId,
         state:se,
         min_quantity:minQuantity,
       } = res
       const state = se===1 
-      setInitialValues({id,name,description,img,price,state,minQuantity})
+      setInitialValues({id,name,description,img,typeId,price,state,minQuantity})
       setInitFileList([{url:img}])
     }
   }
 
-  // id, description, img, minQuantity, name, price, state
+  const getTypeOptions = async ()=>{
+    const res = await shopGoodsTypes({shopId})
+    const list = res.list.map(item=>({label:item.name,value:item.id}))
+    setTypeOptions(list)
+  }
+
 
   const init=()=>{
+    getTypeOptions()
     if(type!=='add'){
       getGoodsDetail()
     }
@@ -113,6 +121,18 @@ function Set() {
           rules={[{ required: true, message: '请选择商品状态!' }]}
           >
           <Switch checkedChildren="上架" unCheckedChildren="下架" />
+        </Form.Item>
+        <Form.Item
+          label="商品类型"
+          name="typeId"
+          rules={[{ required: true, message: '请选择商品类型!' }]}
+          >
+          <Select
+            showSearch
+            placeholder="请选择商品类型"
+            filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+            options={typeOptions}
+          />
         </Form.Item>
         <Form.Item
           label="商品描述"

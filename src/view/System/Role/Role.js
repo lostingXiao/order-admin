@@ -2,7 +2,7 @@ import React,{ useRef, useState } from 'react'
 import style from './Role.module.scss'
 import { useNavigate } from 'react-router-dom'
 import DataTable from '../../../components/DataTable/DataTable'
-import SearchForm from '../../../components/SearchForm/SearchForm'
+import SearchTable from '../../../components/SearchTable/SearchTable'
 import { roleList } from '../../../api/system'
 import { Button, Space } from 'antd'
 
@@ -13,12 +13,10 @@ const searchData=[
 
 export default function Role() {
   const navigate = useNavigate()
-  const tableRef = useRef(null);
-  const [tableParams,setTableParams] = useState({})
   
   const config=(type,id)=>{
     console.log(type)
-    navigate(`/system/role/${type}`,{state:{id}})
+    navigate(`/system/systemRole/${type}`,{state:{id}})
   }
 
   const columns = [
@@ -35,17 +33,9 @@ export default function Role() {
     }
   ]
 
-  const onFinish = (values) => {
-    tableRef.current.onReset();
-  }
-  const onValuesChange = (changedValues,allValues) => {
-    setTableParams(allValues)
-  }
-
   return (
     <div className={style.menu}>
-      <SearchForm data={searchData} onFinish={onFinish} onValuesChange={onValuesChange}/>
-      <DataTable ref={tableRef} columns={columns} buttons={[{label:'新增',onClick:()=>config('add')}]} params={tableParams} api={roleList} rowKey='id' />
+      <SearchTable rowKey='id' searchData={searchData} columns={columns} buttons={[{label:'新增',onClick:()=>config('add')}]} api={roleList} />
     </div>
   )
 }

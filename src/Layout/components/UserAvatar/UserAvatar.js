@@ -22,7 +22,6 @@ function UserAvatar() {
 
   const setUserInfo =  async () => {
     const res = await getUserInfo()
-    console.log(res);
     const { username, phone, shop_id:shopId, role_name:roleName, shop_name:shopName, shop_logo_url:shopLogo } = res
     setSates({ username, phone, shopId, roleName, shopName, shopLogo })
     navigate('/')

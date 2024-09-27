@@ -1,14 +1,13 @@
-import { makeAutoObservable, values } from "mobx"
+import { makeAutoObservable } from "mobx"
 import { getStore, setStore, removeStore } from "../../utils/store"
 const moduleName = 'user-'
-
 
 class User {
 
   token = getStore(`${moduleName}token`) ||''
   username = ''
   phone = ''
-  shopId = null
+  shopId = undefined
   shopName = ''
   shopLogo = ''
   roleName = ''

@@ -1,6 +1,5 @@
 import request from '../utils/request'
-// const http = '/api/admin/public'
-const http = '/api/public'
+const http = '/api/public/admin'
 
 
 // 图片上传

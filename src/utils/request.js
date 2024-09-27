@@ -28,13 +28,12 @@ service.interceptors.response.use(
   response => {
     // 对响应数据做点什么
     const { Token } = response.headers
-    Token && setSates({token:Token})
-    const { code,message:errMsg  } = response.data
-    if(code===0) {
+    Token && setSates({token:Token},true)
+    if(response.data.code===0) {
       return response.data.data
     } else {
-      message.error(errMsg)
-      return Promise.reject(errMsg)
+      message.error(response.data.message)
+      return Promise.reject(response.data.message)
     }
   },
   function (error) {

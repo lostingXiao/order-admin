@@ -31,23 +31,25 @@ const DataTable = forwardRef(({params,columns,buttons,api,rowKey,pageSize},ref)=
   
   return (
     <div>
-      {buttons?<Row className={style.buttons}>
-        <Space>
-          {buttons.map((item,index)=>(
-            <Button key={index} type="primary" onClick={item.onClick}>{item.label}</Button>
-          ))}
-        </Space>
-      </Row>:''}
+      {
+        buttons?<Row className={style.buttons}>
+          <Space>
+            {buttons.map((item,index)=>(
+              <Button key={index} type="primary" onClick={item.onClick}>{item.label}</Button>
+            ))}
+          </Space>
+        </Row>:''
+      }
       <Table 
-      dataSource={tableData} 
-      columns={columns} 
-      pagination={{
-        showTotal:(total) =>`共 ${total} 条`,
-        pageSize,
-        total:total,
-      }} 
-      rowKey={rowKey||''} 
-      onChange={tableChange} />
+        dataSource={tableData} 
+        columns={columns} 
+        pagination={{
+          showTotal:(total) =>`共 ${total} 条`,
+          pageSize,
+          total:total,
+        }} 
+        rowKey={rowKey||'id'} 
+        onChange={tableChange} />
     </div>
   )
 })

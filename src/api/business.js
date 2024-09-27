@@ -75,6 +75,94 @@ export const editGoods=(data)=> {
   })
 }
 
+//商品类型
+
+export const goodsTypesList=(data)=> {
+  return request({
+    url: http + '/goodsTypesList',
+    method: 'POST',
+    data
+  })
+}
+
+export const addGoodsType=(data)=> {
+  return request({
+    url: http + '/addGoodsType',
+    method: 'POST',
+    data
+  })
+}
+export const goodsTypeDetail=(data)=> {
+  return request({
+    url: http + '/goodsTypeDetail',
+    method: 'POST',
+    data
+  })
+}
+export const editGoodsType=(data)=> {
+  return request({
+    url: http + '/editGoodsType',
+    method: 'POST',
+    data
+  })
+}
+export const shopGoodsTypes=(data)=> {
+  return request({
+    url: http + '/shopGoodsTypes',
+    method: 'POST',
+    data
+  })
+}
+
+// 餐桌二维码
+export const addTableQrcode=(data)=> {
+  return request({
+    url: http + '/addTableQrcode',
+    method: 'POST',
+    data
+  })
+}
+export const tableQrcodesList=(data)=> {
+  return request({
+    url: http + '/tableQrcodesList',
+    method: 'POST',
+    data
+  })
+}
+export const editTableQrcode=(data)=> {
+  return request({
+    url: http + '/editTableQrcode',
+    method: 'POST',
+    data
+  })
+}
+export const batchTableQrcode=(data)=> {
+  return request({
+    url: http + '/batchTableQrcode',
+    method: 'POST',
+    data
+  })
+}
+export const tableQrcodeUrl=(data)=> {
+  return request({
+    url: http + '/tableQrcodeUrl',
+    method: 'POST',
+    data
+  })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

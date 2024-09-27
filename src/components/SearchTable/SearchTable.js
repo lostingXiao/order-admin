@@ -17,8 +17,10 @@ export default function SearchTable({ searchData,rowKey,columns,buttons,api  }) 
   }
 
   useEffect(()=>{
+    console.log('useEffect')
+    console.log(searchData)
     fliterInitialValues()
-  },[ ])
+  },[searchData])
 
   const onFinish=v=>{
     const values = { ...initialValues,...v }
@@ -26,6 +28,8 @@ export default function SearchTable({ searchData,rowKey,columns,buttons,api  }) 
   }
   return (
     <>
+
+      <div></div>
       <SearchForm data={searchData} onFinish={onFinish} />
       { render && <DataTable ref={tableRef} params={initialValues} columns={columns} buttons={buttons} api={api} rowKey={rowKey} /> }
     </>

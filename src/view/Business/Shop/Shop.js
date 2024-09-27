@@ -5,6 +5,7 @@ import DataTable from '../../../components/DataTable/DataTable'
 import SearchForm from '../../../components/SearchForm/SearchForm'
 import { shopList,addShop } from '../../../api/business'
 import { Space,Button } from 'antd'
+import SearchTable from '../../../components/SearchTable/SearchTable'
 
 const searchData=[
   { key:'name',type:'input',placeholder:'店铺名称',label:'店铺名称' },
@@ -16,7 +17,7 @@ export default function List() {
   const [searchFormData,setSearchFormData] =useState({})
 
   const config=(type,id)=>{
-    navigate(`/business/shop/${type}`,{state:{id}})
+    navigate(`/business/businessShop/${type}`,{state:{id}})
   }
 
   const columns = [
@@ -48,9 +49,10 @@ export default function List() {
 
 
   return (
-    <div className={style.shop}>
-      <SearchForm data={searchData} onFinish={onFinish} onValuesChange={onValuesChange}/>
-      <DataTable ref={tableRef} columns={columns} buttons={[{label:'新增',onClick:()=>config('add')}]} params={searchFormData} api={shopList} rowKey='id' />
-    </div>
+    <>
+      <SearchTable rowKey='id' searchData={searchData} columns={columns} buttons={[{label:'新增',onClick:()=>config('add')}]} api={shopList}  />
+      {/* <SearchForm data={searchData} onFinish={onFinish} onValuesChange={onValuesChange}/>
+      <DataTable ref={tableRef} columns={columns} buttons={[{label:'新增',onClick:()=>config('add')}]} params={searchFormData} api={shopList} rowKey='id' /> */}
+    </>
   )
 }

@@ -18,7 +18,7 @@ export default function Set() {
     const logoUrl = typeof logo ==='string' ? logo : logo[0].response.data.url
     const params ={ logoUrl,...rest }
     const res = await shopId ? editShop(params) : addShop(params)
-    navigate(-1)
+    navigate('/business/businessShop/businessShopList')
   }
 
   const getShopConfig =async ()=>{

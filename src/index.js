@@ -1,22 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import './index.css';
-import Layout from './Layout/Layout';
-import reportWebVitals from './reportWebVitals';
-import { ConfigProvider } from 'antd';
+import Layout from './Layout/Layout'
+import reportWebVitals from './reportWebVitals'
+import { ConfigProvider } from 'antd'
 import { RouterProvider } from 'react-router-dom'
 import router from './router'
-// import StoreProvider from './store'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <StoreProvider> */}
       <ConfigProvider theme={{ cssVar: true }}>
-        {/* <Layout /> */}
-          <RouterProvider router={router}/>
+          <RouterProvider router={router}>
+            <Layout />
+          </RouterProvider>
       </ConfigProvider>
-    {/* </StoreProvider> */}
   </React.StrictMode>
 );
 
