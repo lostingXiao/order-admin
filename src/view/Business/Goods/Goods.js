@@ -26,7 +26,7 @@ function Goods() {
 
   const config=(type,id)=>{
     console.log(shopId)
-    // navigate(`/business/businessGoods/${type}`,{state:{id}})
+    navigate(`/business/businessGoods/${type}`,{state:{id}})
   }
 
   const columns = [

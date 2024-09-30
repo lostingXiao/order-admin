@@ -23,7 +23,7 @@ export default function Set() {
     const params = { ...values,shopId,id:typesId }
     console.log(params)
     const res = typesId ? await editGoodsType(params) : await addGoodsType(params)
-    navigate(`/business/goodType/list`)
+    navigate(`/business/businessGoodType/businessGoodTypeList`)
   }
 
   const getGoodTypeDetail = async ()=>{

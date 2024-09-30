@@ -13,7 +13,7 @@ function GoodType() {
   const { shopId } = user
 
   const config=(type,id)=>{
-    navigate(`/business/goodType/${type}`,{state:{id}})
+    navigate(`/business/businessGoodType/${type}`,{state:{id}})
   }
 
   const searchData=[

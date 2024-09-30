@@ -17,6 +17,15 @@ const router = createHashRouter([
     }
   },
   {
+    path: 'redirectApp',
+    key: 'redirectApp',
+    title:'登录',
+    async lazy() {
+      const { default:Component } = await import("../view/RedirectApp/RedirectApp")
+      return { Component }
+    }
+  },
+  {
     path: '/',
     element: <Layout />,
     children: [
