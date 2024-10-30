@@ -15,6 +15,7 @@ function TableQRCode({logo,item}) {
   const computedQRCodeValue = (v) => {
     const origin = window.location.origin
     const path = `${origin}/#/redirectApp?code=${content}`
+    console.log(values.id)
     console.log(path)
     return path
   }
